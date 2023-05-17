@@ -18,10 +18,10 @@ import datetime
 from datetime import time, datetime, date, timedelta
 import json
 
-account_sid = 'AC7553f202514a8a162cf09a66cc1bfe4e'
-auth_token = '7740b0c9f15ae420676ca94620429282'
-msg_service_sid = 'MGad1a64453007027c1f6cc73dff9be8ab'
-twilio_number = '+12707135166'
+account_sid = 'twilioACCSID'
+auth_token = 'twilioAUTH'
+msg_service_sid = 'twilioMSGSID'
+twilio_number = 'twilioNUMBER'
 
 
 class AlarmView(APIView):
