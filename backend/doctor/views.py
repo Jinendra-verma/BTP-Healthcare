@@ -11,6 +11,7 @@ from doctor.models import doctor, Dates, Slot
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import BasePermission
+from rest_framework.parsers import MultiPartParser, FormParser
 from patient.models import Appointment, Feedback, Prescription, Medicine, patient, TreatmentHistory, TestReport, AllowedAppointments
 import datetime
 from datetime import time, datetime, date, timedelta
@@ -51,6 +52,7 @@ class registrationView(APIView):
     """"API endpoint for doctor Registration"""
 
     permission_classes = []
+
     def post(self, request, format=None):
         registrationSerializer = doctorRegistrationSerializer(
             data=request.data.get('user_data'))
@@ -76,6 +78,8 @@ class doctorProfileView(APIView):
     """"API endpoint for doctor profile view/update-- Only accessble by doctors"""
 
     permission_classes=[IsDoctor]
+    parser_classes = (MultiPartParser, FormParser)
+
 
     def get(self, request, format=None):
         user = request.user
@@ -92,15 +96,11 @@ class doctorProfileView(APIView):
         user = request.user
         profile = doctor.objects.filter(user=user).get()
         profileSerializer = doctorProfileSerializer(
-            instance=profile, data=request.data.get('profile_data'), partial=True)
+            instance=profile, data=request.data, partial=True)
         if profileSerializer.is_valid():
             profileSerializer.save()
-            return Response({
-                'profile_data':profileSerializer.data
-            }, status=status.HTTP_200_OK)
-        return Response({
-                'profile_data':profileSerializer.errors
-            }, status=status.HTTP_400_BAD_REQUEST)
+            return Response(profileSerializer.data, status=status.HTTP_200_OK)
+        return Response(profileSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class doctorPendingRequestView(APIView):
     """API endpoint for getting all appointment detail-only accesible by doctor"""

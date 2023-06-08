@@ -7,6 +7,9 @@ import "../Dashbaord/dashboard.css";
 import { Redirect } from 'react-router-dom';
 import { AuthContext } from "../Auth/AuthContext";
 import { Button } from "reactstrap";
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
 
 const PatientUpdateDetailsForm = () => {
   const [patient, setPatient] = useState({});
@@ -19,7 +22,10 @@ const PatientUpdateDetailsForm = () => {
   const [address, setAddress] = useState('');
   const [pincode, setPincode] = useState('');
   const [picture, setPicture] = useState(null);
-  const [reports, setReports] = useState('');
+  const [report, setReport] = useState(null);
+  const [rname, setRname] = useState('');
+  const [dname, setDname] = useState('');
+  const [date, setDate] = useState('');
 
   const getPatientDetails = async () => {
     const config = {
@@ -36,7 +42,6 @@ const PatientUpdateDetailsForm = () => {
       setMobile(response.data.profile_data.mobile);
       setAddress(response.data.profile_data.address);
       setPincode(response.data.profile_data.pincode);
-      setPicture(response.data.profile_data.pic);
       window.localStorage.setItem("user", JSON.stringify(response.data));
       setLoading(false);
     })
@@ -66,23 +71,53 @@ const PatientUpdateDetailsForm = () => {
       },
     };
 
-    await Axios.put(`${process.env.REACT_APP_SERVER_URL}/patient/profile/`, {
-                        "profile_data":{
-                          "age":`${age}`,
-                          "address":`${address}`,
-                          "mobile":`${mobile}`,
-                          "email":`${email}`,
-                          "pincode":`${pincode}`,
-                          //"pic":`${picture}`,
-                        }
-                    }, config)
+    let formData = new FormData();
+    formData.append('age', age)
+    formData.append('address', address)
+    formData.append('mobile', mobile)
+    formData.append('email', email)
+    formData.append('pincode', pincode)
+    if(picture !== null) formData.append('pic', picture)
+
+    await Axios.put(`${process.env.REACT_APP_SERVER_URL}/patient/profile/`, formData, config)
     .then(response => {
       console.log(response);
-      setRedirect(true);
     })
     .catch(error => {
       console.log(error);
     });
+
+    if(report!==null){
+      
+      setRedirect(false);
+
+      const dat = new Date(date);
+
+      const year = dat.getFullYear();
+      const month = ("0" + (dat.getMonth() + 1)).slice(-2);
+      const day = ("0" + dat.getDate()).slice(-2);
+
+      const formattedDate = `${year}-${month}-${day}`;
+      console.log(formattedDate);
+      let formData1 = new FormData();
+      formData1.append('test_name', rname)
+      formData1.append('test_date', formattedDate)
+      formData1.append('dr', dname)
+      formData1.append('report', report)
+      
+      await Axios.post(`${process.env.REACT_APP_SERVER_URL}/patient/test-report/`, formData1, config)
+      .then(response => {
+        console.log(response);
+        alert("Info changed Successfully")
+        setRedirect(true);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  
+    }else{
+      setRedirect(true);
+    }
   };
 
   return (
@@ -181,7 +216,6 @@ const PatientUpdateDetailsForm = () => {
                         <input
                           type="file"
                           style={{border:'', width:'30vw' , borderColor:'black'}}
-                          accept="image/*"
                           onChange={(e) => setPicture(e.target.files[0])}
                         />
                         {picture && (
@@ -195,7 +229,52 @@ const PatientUpdateDetailsForm = () => {
                         <span className="badge badge-success mr-2 p-2" style={{backgroundColor: "#00cc00"}}>
                           Reports
                         </span>
-                        {/* {patient.profile_data.address} */}
+                        <input
+                          type="file"
+                          style={{border:'', width:'30vw' , borderColor:'black'}}
+                          onChange={(e) => setReport(e.target.files[0])}
+                        />
+                        {report && (
+                          <div>
+                            <p>Selected File: {report.name}</p>
+                            <ul className="list-group">
+                              <li className="list-group-item" style={{backgroundColor: "#0099cc"}}>
+                                <span className="badge badge-success mr-2 p-2" style={{backgroundColor: "#00cc00"}}>
+                                  Report Name:
+                                </span>
+                                <input
+                                  style={{border:'', width:'30vw' , borderColor:'black'}}
+                                  type="text"
+                                  value={rname}
+                                  onChange={(e) => setRname(e.target.value)}
+                                />
+                              </li>
+                              <li className="list-group-item" style={{backgroundColor: "#0099cc"}}>
+                                <span className="badge badge-success mr-2 p-2" style={{backgroundColor: "#00cc00"}}>
+                                  Doctor Name:
+                                </span>
+                                <input
+                                  style={{border:'', width:'30vw' , borderColor:'black'}}
+                                  type="text"
+                                  value={dname}
+                                  onChange={(e) => setDname(e.target.value)}
+                                />
+                              </li>
+                              <li className="list-group-item" style={{backgroundColor: "#0099cc"}}>
+                                <span className="badge badge-success mr-2 p-2" style={{backgroundColor: "#00cc00"}}>
+                                  Date:
+                                </span>
+                                <DatePicker
+                                  selected={date}
+                                  onChange={(date) => setDate(date)}
+                                  dateFormat="yyyy-MM-dd"
+                                  placeholderText="Select a date"
+                                />
+                                
+                              </li>
+                            </ul>
+                          </div>
+                        )}
                       </li>
                     </ul>
                       <button type="submit" onClick={handleSubmit} style={{marginLeft:"300px" , marginRight:"300px" , marginTop:"10px" , marginBottom:"10px"}}>Update</button>

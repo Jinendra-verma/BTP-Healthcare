@@ -18,6 +18,7 @@ const SearchDoctor = () => {
               border: "15px solid #0099cc ",
               height: "80vh",
               backgroundColor: "#ffffff",
+              overflow: 'auto'
             }}
           >
             <Search />

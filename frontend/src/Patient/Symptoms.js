@@ -101,10 +101,14 @@ const Symptoms = (props) => {
                   border: "15px solid #0099cc ",
                   height: "80vh",
                   backgroundColor: "#ffffff",
+                  overflow: 'auto'
                 }}
               >
                 <div>
-                <h3>Select Symptoms</h3>
+                  <h3 style={{color: '#002db3', height: '2px'}}>Select Symptoms</h3>
+                  <br></br>
+                  <hr style={{backgroundColor: 'black', height:'2px'}}></hr>
+                  <br></br>
                 <Select
                     isMulti
                     value={selectedOptions}
@@ -114,7 +118,7 @@ const Symptoms = (props) => {
                     options={symptomslist.map((option, index) => ({
                         value: option,
                         label: option
-                    }))}
+                    })).sort((a, b) => a.label.localeCompare(b.label))}
                 />
                 {selectedOptions.length > 0 && (
                     <div>

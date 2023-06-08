@@ -58,6 +58,7 @@ const DocAppointments = () => {
             id: redirect,
             val: val,
             link: '/doctor/payment-history',
+            pan: 0,
           },
         }}
       />
@@ -81,11 +82,16 @@ const DocAppointments = () => {
                             border: "15px solid #0099cc ",
                             height: "80vh",
                             backgroundColor: "#ffffff",
+                            overflow: 'auto'
                           }}
                         >
                     
                     <div>
-                  {appointments.length === 0 && <h1>No Previous Appointment to show</h1>}
+                      <h3 style={{color: '#002db3', height: '2px'}}>Previous Appointments</h3>
+                      <br></br>
+                      <hr style={{backgroundColor: 'black', height:'2px'}}></hr>
+                      <br></br>
+                  {appointments.length === 0 && <h1>No Previous Appointments to show</h1>}
                   
                   {showAll===0 && appointments.length !== 0 ?
                   

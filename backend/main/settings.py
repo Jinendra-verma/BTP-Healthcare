@@ -158,4 +158,4 @@ MEDIA_URL = 'media/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-OPENAI_API_KEY = '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'
+# OPENAI_API_KEY = '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'

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo, useContext } from "react";
 import Axios from "axios";
 import Scrollbar from "react-scrollbars-custom";
 import { AuthContext } from "../Auth/AuthContext";
+import { FaMapMarkerAlt } from 'react-icons/fa';
 // import { ListGroup, ListGroupItem } from "reactstrap";
 
 import {
@@ -87,7 +88,7 @@ const Search = () => {
   }
 
   const fetchDoctor = async () => {
-    const config = {
+    const config = { 
       headers: {
         Authorization: `token ${token}`,
       },
@@ -136,6 +137,17 @@ const Search = () => {
 
   return (
     <div>
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <h3 style={{color: '#002db3'}}>Search Doctor</h3>
+      {/* <Link to={{ pathname: "/patient/showmap" }}>
+      <div style={{ display: 'flex', alignItems: 'center', border: '1px solid black', padding: '3px' }}>
+        <FaMapMarkerAlt size={24} color="red" />
+        <h5 style={{ color: '#002db3', marginLeft: '8px', marginTop: '8px' }}>Show in Map</h5>
+      </div>
+      </Link> */}
+      </div>
+      <hr style={{backgroundColor: 'black', height:'2px'}}></hr>
+      <br></br>
       <Row className="mb-3">
         <Col>
           <InputGroup>
@@ -147,7 +159,7 @@ const Search = () => {
               className="mb-1"
             />
             <div style={{ height: 10 }} className="">
-              <InputGroupAddon addonType="append">
+              <InputGroupAddon addonType="append"> 
                 <Button
                   className="h-10 d-inline-block"
                   color="primary"

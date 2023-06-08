@@ -15,7 +15,7 @@ from .views import (registrationView,
                     patientPendingRequestView)
 from .PdfDowloadView import pdf
 from .AlarmView import AlarmView
-from django.urls import path
+from django.urls import path, include
 
 
 urlpatterns = [
@@ -56,4 +56,5 @@ urlpatterns = [
 
     path('pdf/<int:pk>/', pdf.as_view(), name='pdf'), #pk - appointment id
     path('alarm/', AlarmView.as_view()),
+    path('geolocation/',include('geolocation.urls')),
 ]

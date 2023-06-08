@@ -202,7 +202,7 @@ const DoctorPrescriptionForm = (props) => {
             <button type="button" style = {{margin: '15px' , padding:'2px'}} onClick={() => handleRemoveTest(index)}>
               Remove Test
             </button>
-            <hr style = {{backgroundColor: 'white', margin: '10px'}}></hr>
+            <hr style = {{backgroundColor: 'black', margin: '10px'}}></hr>
           </div>
         ))}
         <button style = {{margin: '15px' , padding:'2px'}} type="button" onClick={handleAddTest}>
@@ -223,7 +223,7 @@ const DoctorPrescriptionForm = (props) => {
               onChange={(e) => handleMedicineChange(e, index)}
             />
           </label>
-          <hr style = {{backgroundColor: 'green', margin: '10px', width: '350px' , height:"1px"}}></hr>
+          <hr style = {{backgroundColor: 'black', margin: '10px', width: '350px'}}></hr>
 
           <label style = {{margin: '15px'}}>
             Medicine Type:
@@ -240,7 +240,7 @@ const DoctorPrescriptionForm = (props) => {
               ))}
             </select>
           </label>
-          <hr style = {{backgroundColor: 'white', margin: '10px', width: '350px'}}></hr>
+          <hr style = {{backgroundColor: 'black', margin: '10px', width: '350px'}}></hr>
 
           <label style = {{margin: '15px'}}>
             Dosage:
@@ -257,7 +257,7 @@ const DoctorPrescriptionForm = (props) => {
               ))}
             </select>
           </label>
-          <hr style = {{backgroundColor: 'white', margin: '10px', width: '350px'}}></hr>
+          <hr style = {{backgroundColor: 'black', margin: '10px', width: '350px'}}></hr>
 
           <label style = {{margin: '15px'}}>
             Dosage Times:
@@ -274,7 +274,7 @@ const DoctorPrescriptionForm = (props) => {
               ))}
             </select>
           </label>
-          <hr style = {{backgroundColor: 'white', margin: '10px', width: '350px'}}></hr>
+          <hr style = {{backgroundColor: 'black', margin: '10px', width: '350px'}}></hr>
 
           <label style = {{margin: '15px'}}>
             Duration of Medicine (in days):
@@ -286,7 +286,7 @@ const DoctorPrescriptionForm = (props) => {
               onChange={(e) => handleDurationTimeChange(e, index)}
             />
           </label>
-          <hr style = {{backgroundColor: 'white', margin: '10px', width: '350px'}}></hr>
+          <hr style = {{backgroundColor: 'black', margin: '10px', width: '350px'}}></hr>
 
           <label style = {{margin: '15px'}}>
             Take Medicine With:
@@ -303,7 +303,7 @@ const DoctorPrescriptionForm = (props) => {
               ))}
             </select>
           </label>
-          <hr style = {{backgroundColor: 'white', margin: '10px', width: '350px'}}></hr>
+          <hr style = {{backgroundColor: 'grey', borderWidth: '3px', margin: '10px'}}></hr>
 
           <button style = {{margin: '15px'}} type="button" onClick={() => handleRemoveMedicine(index)}>
             Remove Medicine
@@ -335,6 +335,7 @@ const DoctorPrescriptionForm = (props) => {
     : 
     
     <form style={{ backgroundColor: '#e0ebeb', color: '#0099cc', width: '500px' }}>
+      
       {val.hasOwnProperty("patient") ?
         <label style = {{margin: '15px'}}>
           Patient Name:
@@ -406,7 +407,8 @@ const DoctorPrescriptionForm = (props) => {
               value={medicine.name}
             />
           </label>
-          <hr style = {{backgroundColor: 'green', margin: '10px', width: '350px' , height:"1px"}}></hr>
+          
+          <hr style = {{backgroundColor: 'black', margin: '10px', width: '350px'}}></hr>
 
           <label style = {{margin: '15px'}}>
             Medicine Type:
@@ -418,7 +420,7 @@ const DoctorPrescriptionForm = (props) => {
               value={medicine.type}
             />
           </label>
-          <hr style = {{backgroundColor: 'white', margin: '10px', width: '350px'}}></hr>
+          <hr style = {{backgroundColor: 'black', margin: '10px', width: '350px'}}></hr>
 
           <label style = {{margin: '15px'}}>
             Dosage:
@@ -430,7 +432,7 @@ const DoctorPrescriptionForm = (props) => {
               value={medicine.dosage}
             />
           </label>
-          <hr style = {{backgroundColor: 'white', margin: '10px', width: '350px'}}></hr>
+          <hr style = {{backgroundColor: 'black', margin: '10px', width: '350px'}}></hr>
 
           <label style = {{margin: '15px'}}>
             Dosage Times:
@@ -442,7 +444,7 @@ const DoctorPrescriptionForm = (props) => {
               value={medicine.times}
             />
           </label>
-          <hr style = {{backgroundColor: 'white', margin: '10px', width: '350px'}}></hr>
+          <hr style = {{backgroundColor: 'black', margin: '10px', width: '350px'}}></hr>
 
           <label style = {{margin: '15px'}}>
             Duration of Medicine (in days):
@@ -454,7 +456,7 @@ const DoctorPrescriptionForm = (props) => {
               value={medicine.duration}
             />
           </label>
-          <hr style = {{backgroundColor: 'white', margin: '10px', width: '350px'}}></hr>
+          <hr style = {{backgroundColor: 'black', margin: '10px', width: '350px'}}></hr>
 
           <label style = {{margin: '15px'}}>
             Take Medicine With:
@@ -465,11 +467,12 @@ const DoctorPrescriptionForm = (props) => {
               value={medicine.With}
             />
           </label>
-          <hr style = {{backgroundColor: 'white', margin: '10px', width: '350px'}}></hr>
+          <hr style = {{backgroundColor: 'grey', borderWidth: '3px', margin: '10px'}}></hr>
         </div>
+        
       ))}
 
-      <hr style = {{backgroundColor: 'grey', borderWidth: '3px', margin: '10px'}}></hr>
+      
 
       <label style = {{margin: '15px'}}>
         Additional Advice:
@@ -480,10 +483,6 @@ const DoctorPrescriptionForm = (props) => {
         />
       </label>
       <hr style = {{backgroundColor: 'grey', borderWidth: '3px', margin: '10px'}}></hr>
-
-      <Link to={link}>
-        <Button style = {{margin: '15px', backgroundColor:'red'}}>Cancel</Button>
-      </Link>
     </form>
     }
     </div>

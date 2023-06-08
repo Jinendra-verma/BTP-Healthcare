@@ -6,6 +6,7 @@ import "../Dashbaord/dashboard.css";
 import { AuthContext } from "../Auth/AuthContext";
 import Leftside from "../Dashbaord/LeftsidePatient";
 import { Button } from "reactstrap";
+import { BeatLoader  } from 'react-spinners';
 import { Link, Redirect } from "react-router-dom";
 
 const ShowDiseaseInfo = (props) => {
@@ -58,7 +59,10 @@ const ShowDiseaseInfo = (props) => {
                     >
                         <Leftside />
                     </div>
-                    {isLoading && <h1>Loading</h1>}
+                    {isLoading && <div className="loading-container">
+                                    <h1 style={{color: 'white', paddingLeft: 10}}>Collecting Information</h1>
+                                    <BeatLoader style={{paddingLeft: 20}}  color="#ffffff" size={50} />
+                                  </div>}
                     {!isLoading && <div
                         className="col-9 col-md-9 p-4"
                         style={{
@@ -95,4 +99,4 @@ const ShowDiseaseInfo = (props) => {
     );
 };
 
-export default ShowDiseaseInfo;
+export default ShowDiseaseInfo; 

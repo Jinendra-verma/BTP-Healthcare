@@ -7,16 +7,16 @@ const LeftsideDoctor = () => {
   return (
     <div>
       <ul className="mt-5">
-        <li>
-          <Link to="/doctor">
-            <Option Value="Upcoming Appointments" Option="today" />
-          </Link>
-        </li>
         <li style={{ textDecoration: "none" }}>
           <Link to="/doctor/perosnaldetails">
             <Option Value="Personal Details" />
           </Link>
         </li>
+        <li>
+          <Link to="/doctor">
+            <Option Value="Upcoming Appointments" Option="today" />
+          </Link>
+        </li>        
         <li style={{ textDecoration: "none" }}>
           <Link to="/doctor/pending-appointment">
             <Option Value="Pending Appointment Request" />
@@ -28,11 +28,6 @@ const LeftsideDoctor = () => {
           </Link>
         </li>
 
-        {/* <li style={{ textDecoration: "none" }}>
-          <Link to="/doctor/feedback">
-            <Option Value="Feedback" />
-          </Link>
-        </li> */}
       </ul>
     </div>
   );

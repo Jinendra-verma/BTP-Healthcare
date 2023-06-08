@@ -22,8 +22,13 @@ const DoctorDashboard = () => {
               border: "15px solid #0099cc ",
               height: "80vh",
               backgroundColor: "#ffffff",
+              overflow: 'auto'
             }}
           >
+            <h3 style={{color: '#002db3', height: '2px'}}>Upcoming Appointments</h3>
+            <br></br>
+            <hr style={{backgroundColor: 'black', height:'2px'}}></hr>
+            <br></br>
             <TodaysSchedule />
           </div>
         </div>

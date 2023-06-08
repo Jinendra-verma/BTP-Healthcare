@@ -13,6 +13,11 @@ const LeftsidePatient = () => {
           </Link>
         </li>
         <li>
+          <Link to="/patient/predictdisease">
+            <Option Value="Predict Disease" />
+          </Link>
+        </li>
+        <li>
           <Link to="/patient/searchdoctor">
             <Option Value="Search Doctor" />
           </Link>
@@ -35,11 +40,7 @@ const LeftsidePatient = () => {
           </Link>
         </li>
 
-        <li>
-          <Link to="/patient/predictdisease">
-            <Option Value="Predict Disease" />
-          </Link>
-        </li>
+        
 
         <li>
           <Link to="/patient/setreminder">

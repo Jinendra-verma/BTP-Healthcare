@@ -123,7 +123,7 @@ const ViewDoc = (props) => {
           </div>
           <div className="col-3 col-md-3 p-4 ">
             <img
-              src={doctor.pic}
+              src={doctor.pic ? `${process.env.REACT_APP_SERVER_URL}${doctor.pic}` : 'https://img.freepik.com/free-vector/doctor-character-background_1270-84.jpg?w=2000'}
               // className="rounded-circle"
 
               style={{ width: "100%" }}

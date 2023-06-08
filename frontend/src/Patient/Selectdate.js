@@ -31,10 +31,16 @@ const Selectdate = (props) => {
               border: "15px solid #0099cc ",
               height: "80vh",
               backgroundColor: "#ffffff",
+              overflow: 'auto'
             }}
           >
+            <h3 style={{color: '#002db3', height: '2px'}}>Select Appointment Date</h3>
+            <br></br>
+            <hr style={{backgroundColor: 'black', height:'2px'}}></hr>
+            <br></br>
             <div className="d-flex justify-content-center">
               {/* <ReactCalendar /> */}
+              
               <div>
                 <Calendar
                   tileDisabled={({ date }) =>

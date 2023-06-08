@@ -115,6 +115,10 @@ const SetReminder = () => {
               overflow: 'auto'
             }}
           > 
+          <h3 style={{color: '#002db3', height: '2px'}}>Set Reminders</h3>
+          <br></br>
+          <hr style={{backgroundColor: 'black', height:'2px'}}></hr>
+          <br></br>
             <form style={{ backgroundColor: '#e0ebeb', color: '#0099cc', width: '500px' }}>
                 {reminders.map((reminder, index) => (
                     <div key={index}>

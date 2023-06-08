@@ -57,7 +57,7 @@ const TodaysSchedule = () => {
 
   return (
     <div>
-     {appointments.length === 0 && <h1>No Appointment to show</h1>}
+     {appointments.length === 0 && <h1>No Appointments to show</h1>}
     
     {showAll===0 && appointments.length !== 0 ?
     

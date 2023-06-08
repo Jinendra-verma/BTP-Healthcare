@@ -12,6 +12,7 @@ const SearchBar = () => {
   const [redirect, setRedirect] = useState(0);
   const [doc, setDoc] = useState(null);
   const [disease, setDisease] = useState('');
+  const [percentage, setPercentage] = useState(0);
 
 
   const symptomslist=['itching','skin_rash','nodal_skin_eruptions','continuous_sneezing','shivering','chills','joint_pain',
@@ -62,6 +63,7 @@ const SearchBar = () => {
                         } ,config)
     .then(response => {
       setData(response.data);
+      setPercentage(response.data.confience_score*1)
       console.log(response.data)
     })
     .catch(error => {
@@ -79,6 +81,13 @@ const SearchBar = () => {
     setRedirect(2);
   }
 
+  const barStyles = {
+    width: `${percentage}%`,
+    backgroundColor: '#2196F3',
+    height: '20px',
+    transition: 'width 0.5s ease-in-out',
+};
+
   if(redirect === 1){
     return <Redirect
       to={{
@@ -90,6 +99,7 @@ const SearchBar = () => {
       }}
     />
   }
+
 
   if(redirect === 2){
     return <Redirect
@@ -114,7 +124,7 @@ const SearchBar = () => {
         options={symptomslist.map((option, index) => ({
           value: index,
           label: option
-        }))}
+        })).sort((a, b) => a.label.localeCompare(b.label))}
       />
       {selectedOptions.length > 0 && (
         <div>
@@ -132,13 +142,17 @@ const SearchBar = () => {
             <div className="col-sm-6 mb-2">
               <div className="text-info">
                 <h5>
-                  Predicted Disease:
-                  <span className="text-uppercase"> {data.disease[0]}</span>
+                  You are diagnosed with 
+                  <span className="text-uppercase" style={{color: 'black'}}> {data.disease[0]} </span>
+                  with 
+                  <span className="text-uppercase" style={{color: 'black'}}> {data.confience_score}% </span> 
+                  of chances
                 </h5>
-                <h5>
-                  Confidence Score:
-                  <span className="text-uppercase"> {data.confience_score}</span>
-                </h5>
+      
+                  <div style={{ backgroundColor: '#f0f0f0', height: '20px' }}>
+                    <div style={barStyles}></div>
+                  </div>
+                  <br></br>
                 <button className="btn btn-sm btn-primary" onClick={() => handleinfo(data.disease[0])}> Know More About {data.disease[0]}</button>
               </div>
               <br></br><br></br>
@@ -160,7 +174,7 @@ const SearchBar = () => {
                       className=" col align-self-end inline"
                       style={{ textAlign: "center" }}
                     >
-                      <button className="btn btn-sm btn-primary" onClick={() => handleRedirect(doc)}> View Profile</button>
+                      <button className="btn btn-sm btn-primary" onClick={() => handleRedirect(doc)}> View Profile</button> 
                     </div>
                   </div>
                 </div>

@@ -38,6 +38,7 @@ import ViewDoc from "./Patient/ViewDoc";
 import ViewPat from "./Doctor/ViewPat";
 import ShowDiseaseInfo from "./Patient/ShowDiseaseInfo";
 import SetReminder from "./Patient/SetReminder";
+import ShowMap from "./Pages/ShowMap";
 
 function App() {
 	const [token, setToken] = useState(window.localStorage.getItem("token"));
@@ -109,6 +110,7 @@ function App() {
 					<Route exact path="/doctor/viewpat" component={ViewPat} />
 					<Route exact path="/patient/diseaseinfo" component={ShowDiseaseInfo} />
 					<Route exact path="/patient/setreminder" component={SetReminder} />
+					<Route exact path="/patient/showmap" component={ShowMap} />
 					<Route
 						exact
 						path="/patient/previousappointments"

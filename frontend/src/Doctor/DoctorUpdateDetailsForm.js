@@ -33,7 +33,6 @@ const DoctorUpdateDetailsForm = () => {
         setDepartment(response.data.profile_data.specialization);
         setMobile(response.data.profile_data.mobile);
         setAddress(response.data.profile_data.address);
-        setPicture(response.data.profile_data.pic);
         setPincode(response.data.profile_data.pincode);
         setFees(response.data.profile_data.feesperSession);
         window.localStorage.setItem("user", JSON.stringify(response.data));
@@ -60,21 +59,19 @@ const DoctorUpdateDetailsForm = () => {
     const config = {
       headers: {
         Authorization: `token ${token}`,
-        "Content-Type": "application/json",
+        'Content-Type': 'multipart/form-data',
       },
     };
 
+    let formData = new FormData();
+    formData.append('address', address)
+    formData.append('mobile', mobile)
+    formData.append('feesperSession', fees)
+    formData.append('pincode', pincode)
+    if(picture !== null)formData.append('pic', picture)
+
     await Axios.put(
-      `${process.env.REACT_APP_SERVER_URL}/doctor/profile/`,
-      { profile_data: {
-        "address":`${address}`,
-        "mobile":`${mobile}`,
-        "feesperSession":`${fees}`,
-        "pincode":`${pincode}`,
-        //"pic":`${picture}`,
-      } },
-      config
-    )
+      `${process.env.REACT_APP_SERVER_URL}/doctor/profile/`, formData, config)
       .then((response) => {
         console.log(response);
         setRedirect(true);
@@ -170,7 +167,6 @@ const DoctorUpdateDetailsForm = () => {
                           <input
                             type="file"
                             style={{border: '', width:'30vw', borderColor:'black'}}
-                            accept="image/*"
                             onChange={(e) => setPicture(e.target.files[0])}
                           />
                           {picture && (

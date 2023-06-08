@@ -11,6 +11,7 @@ import { Button } from "reactstrap";
 const PersonalDetails = () => {
   const { token } = useContext(AuthContext);
   const [doctor, setDoctor] = useState({});
+  const [url, setUrl] = useState('');
   const [feedback, setFeedback] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -24,6 +25,7 @@ const PersonalDetails = () => {
     await Axios.get(`${process.env.REACT_APP_SERVER_URL}/doctor/profile/`, config)
     .then(response => {
       setDoctor(response.data);
+      setUrl(`${process.env.REACT_APP_SERVER_URL}${response.data.profile_data.pic}`)
       window.localStorage.setItem("user", JSON.stringify(response.data));
       setLoading(false);
     })
@@ -168,7 +170,7 @@ const PersonalDetails = () => {
           </div>
           <div className="col-3 col-md-3 p-4 ">
           <img
-              src={doctor.profile_data.pic ? doctor.profile_data.pic : 'https://img.freepik.com/free-vector/doctor-character-background_1270-84.jpg?w=2000'}
+              src={doctor.profile_data.pic ? url : 'https://img.freepik.com/free-vector/doctor-character-background_1270-84.jpg?w=2000'}
               // className="rounded-circle"
 
               style={{ width: "100%" }}

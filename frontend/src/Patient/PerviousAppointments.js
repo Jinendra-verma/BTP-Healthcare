@@ -55,6 +55,7 @@ const PatientAppointments = () => {
           id: redirect,
           val: val,
           link: '/patient/previousappointments',
+          pan: 1,
         },
       }}
     />
@@ -77,8 +78,13 @@ const PatientAppointments = () => {
               border: "15px solid #0099cc ",
               height: "80vh",
               backgroundColor: "#ffffff",
+              overflow: 'auto'
             }}
           > 
+          <h3 style={{color: '#002db3', height: '2px'}}>Previous Appointments</h3>
+          <br></br>
+          <hr style={{backgroundColor: 'black', height:'2px'}}></hr>
+          <br></br>
             {Appointments.length === 0 && <h1>No Previous Appointment to show</h1>}
             {Appointments.length !== 0 &&
             <Scrollbar

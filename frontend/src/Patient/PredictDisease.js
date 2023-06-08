@@ -21,6 +21,10 @@ const PredictDisease = () => {
               overflow: 'auto'
             }}
           >
+            <h3 style={{color: '#002db3', height: '2px'}}>Predict Disease</h3>
+          <br></br>
+          <hr style={{backgroundColor: 'black', height:'2px'}}></hr>
+          <br></br>
             <SearchBar />
           </div>
         </div>

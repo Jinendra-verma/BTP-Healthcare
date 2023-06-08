@@ -11,6 +11,8 @@ import { Button } from "reactstrap";
 const PersonalDetails = () => {
   const [patient, setPatient] = useState({});
   const [loading, setLoading] = useState(true);
+  const [url, setUrl] = useState('');
+  const [report, setReport] = useState([]);
   const { token } = useContext(AuthContext);
 
   const getPatientDetails = async () => {
@@ -23,8 +25,20 @@ const PersonalDetails = () => {
     await Axios.get(`${process.env.REACT_APP_SERVER_URL}/patient/profile/`, config)
     .then(response => {
       setPatient(response.data);
+      setUrl(`${process.env.REACT_APP_SERVER_URL}${response.data.profile_data.pic}`)
       window.localStorage.setItem("user", JSON.stringify(response.data));
       setLoading(false);
+    })
+    .catch(error => {
+      console.log(error);
+      setLoading(false);
+    });
+
+    await Axios.get(`${process.env.REACT_APP_SERVER_URL}/patient/test-report/`, config)
+    .then(response => {
+      setReport(response.data);
+      setLoading(false);
+      console.log(response.data)
     })
     .catch(error => {
       console.log(error);
@@ -121,16 +135,15 @@ const PersonalDetails = () => {
                       </li>
                       <li className="list-group-item" style={{backgroundColor: "#0099cc"}}>
                         <span className="badge badge-success mr-2 p-2" style={{backgroundColor: "#00cc00"}}>
-                          Reports
+                          Reports:
                         </span>
-                        {/* {patient.profile_data.address} */}
                       </li>
                     </ul>
                   </div>
                 </div>
                 <div className="col-3 col-md-3 p-4 ">
                   <img
-                    src={patient.profile_data.pic ? patient.profile_data.pic : 'https://static.vecteezy.com/system/resources/previews/002/406/611/original/business-man-cartoon-character-vector.jpg'}
+                    src={patient.profile_data.pic ? url : 'https://static.vecteezy.com/system/resources/previews/002/406/611/original/business-man-cartoon-character-vector.jpg'}
                     // className="rounded-circle"
 
                     style={{ width: "100%" }}
@@ -138,6 +151,25 @@ const PersonalDetails = () => {
                   />
                 </div>
               </div>
+              {report.length !==0 &&
+              <table className="table table-hover table-dark">
+                <thead>
+                  <tr>
+                    <th scope="col">Doctor Name</th>
+                    <th scope="col">Test Date</th>
+                    <th scope="col">Report</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {report.map((rep, index) => (
+                    <tr key={rep.id}>
+                      <th scope="row">{rep.dr}</th>
+                      <th scope="row">{rep.test_date}</th>
+                      <th scope="row"><a href = {`${process.env.REACT_APP_SERVER_URL}${rep.report}`} target="_blank">{rep.test_name}</a></th>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>}
             </div>
           </div>
         </div>

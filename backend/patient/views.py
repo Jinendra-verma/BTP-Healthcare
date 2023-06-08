@@ -18,6 +18,7 @@ from rest_framework import serializers, status
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import BasePermission
+from rest_framework.parsers import MultiPartParser, FormParser
 from .models import patient, Appointment, TestReport, Feedback, Prescription, Medicine, TreatmentHistory, AllowedAppointments
 from doctor.models import doctor, Dates, Slot
 from django.db.models import Q
@@ -81,7 +82,7 @@ class registrationView(APIView):
 class patientProfileView(APIView):
     """"API endpoint for Patient profile view/update-- Only accessble by patients"""
     permission_classes = [IsPatient]
-
+    parser_classes = (MultiPartParser, FormParser)
 
     def get(self, request, format=None):
         user = request.user
@@ -98,15 +99,11 @@ class patientProfileView(APIView):
         user = request.user
         profile = patient.objects.filter(user=user).get()
         profileSerializer = patientProfileSerializer(
-            instance=profile, data=request.data.get('profile_data'), partial=True)
+            instance=profile, data=request.data, partial=True)
         if profileSerializer.is_valid():
             profileSerializer.save()
-            return Response({
-                'profile_data':profileSerializer.data
-            }, status=status.HTTP_200_OK)
-        return Response({
-                'profile_data':profileSerializer.errors
-            }, status=status.HTTP_400_BAD_REQUEST)
+            return Response(profileSerializer.data, status=status.HTTP_200_OK)
+        return Response(profileSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class patientHistoryView(APIView):
 
@@ -345,6 +342,7 @@ class SlotView(APIView):
 class TestReportView(APIView):
 
     permission_classes = [IsPatient]
+    parser_classes = (MultiPartParser, FormParser)
 
     def get_object(self, pk):
         try:
@@ -375,18 +373,9 @@ class TestReportView(APIView):
         , status=status.HTTP_400_BAD_REQUEST)
     
     def put(self, request, pk=None, format=None):
-        if pk:
-            report_detail = self.get_object(pk)
-            data = request.data.pop('id')
-            serializer = TestReportSerializer(report_detail, data=data, partial=True)
-        else :
-            user = request.user
-            user_patient = patient.objects.filter(user=user).get()
-            id = request.data.get('id')
-            data = request.data
-            report = TestReport.objects.get(patient=user_patient,id=id)
-            serializer = TestReportSerializer(
-                report, data=data, partial=True)
+        report = self.get_object(pk)
+        serializer = TestReportSerializer(
+                report, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)

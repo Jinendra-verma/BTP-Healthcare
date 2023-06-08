@@ -1,7 +1,6 @@
 /* global gapi */
 import React, { useState, useEffect, useContext } from "react";
 import Axios from "axios";
-import jwt_decode from "jwt-decode";
 import Navbar from "../Basic/Navbar";
 import "../Dashbaord/dashboard.css";
 import { AuthContext } from "../Auth/AuthContext";
@@ -11,21 +10,9 @@ import { Button } from "reactstrap";
 const AppointmentStatus = () => {
     const [appointments, setAppointments] = useState([]);
     const [isLoading, setIsLoading] = useState()
-    const [filteredAppointments, setFilteredAppointments] = useState()
     const [data, setData] = useState([]);
     const [showAll, setShowAll] = useState(0);
     const { token } = useContext(AuthContext);
-
-    function getMeetLink(id) {
-        if(filteredAppointments !== undefined){
-            const meetCode = filteredAppointments.find((apntmnt) => {
-                return apntmnt.id === id
-            })
-
-            return meetCode ? meetCode.hangoutLink : "#"
-        }
-        return '#'
-    }
 
     const fetchAppointments = async () => {
         console.log(token)
@@ -47,23 +34,6 @@ const AppointmentStatus = () => {
             setIsLoading(false);
           });
         
-        // const response = await window.gapi.client.calendar.events.list({
-        //     'calendarId': 'primary',
-        //     'timeMin': (new Date()).toISOString(),
-        //     'showDeleted': false,
-        //     'singleEvents': true,
-        //     'maxResults': 100,
-        //     'orderBy': 'startTime'
-        // })
-
-        // // Filter google calendar events
-        // const events = response.result.items
-        // const filteredEvents = events.filter((event) => {
-        //     return data.find((it) => it._id === event.id)
-        // })
-
-        // console.log(filteredEvents)
-        // setFilteredAppointments(filteredEvents)
     };
 
     useEffect(() => {
@@ -94,9 +64,15 @@ const AppointmentStatus = () => {
                             border: "15px solid #0099cc ",
                             height: "80vh",
                             backgroundColor: "#ffffff",
+                            overflow: 'auto'
                         }}
                     >
-                                {showAll===0 ?
+                        <h3 style={{color: '#002db3', height: '2px'}}>Upcoming Appointments</h3>
+                        <br></br>
+                        <hr style={{backgroundColor: 'black', height:'2px'}}></hr>
+                        <br></br>
+                        {appointments.length === 0 && <h1>No Upcoming Appointments</h1>}
+                                {appointments.length !== 0 && showAll===0 ?
                                     <table className="table table-hover table-dark">
                                         <thead>
                                             <tr>

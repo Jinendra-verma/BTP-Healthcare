@@ -138,8 +138,13 @@ const DocPendingAppointments = () => {
                             border: "15px solid #0099cc ",
                             height: "80vh",
                             backgroundColor: "#ffffff",
+                            overflow: 'auto'
                         }}
                     >
+                        <h3 style={{color: '#002db3', height: '2px'}}>Pending Appointment Requests</h3>
+                        <br></br>
+                        <hr style={{backgroundColor: 'black', height:'2px'}}></hr>
+                        <br></br>
                             {appointments.length === 0 && <h1>No Pending Requests</h1>}
                                 {appointments.length !== 0 ?
                                     

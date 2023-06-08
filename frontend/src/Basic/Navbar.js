@@ -69,7 +69,7 @@ const Navbar = () => {
           height="24"
           className="d-inline-block align-top mr-2 mt-1"
         ></img>
-        Hospital Management System
+        SymptoCare
       </Link>
       <button
         className="navbar-toggler"

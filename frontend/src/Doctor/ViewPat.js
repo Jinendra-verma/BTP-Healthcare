@@ -12,6 +12,8 @@ const ViewPat = (props) => {
   const { id, link } = props.location.state;
   const [patient, setPatient] = useState({});
   const [loading, setLoading] = useState(true);
+  const [url, setUrl] = useState('');
+  const [report, setReport] = useState([]);
   const { token } = useContext(AuthContext);
 
   const getPatientDetails = async () => {
@@ -32,6 +34,9 @@ const ViewPat = (props) => {
                     })
     .then(response => {
       setPatient(response.data);
+      setUrl(`${process.env.REACT_APP_SERVER_URL}${response.data.patient_profile.pic}`)
+      setReport(response.data.test_report)
+      console.log(response.data)
       window.localStorage.setItem("user", JSON.stringify(response.data));
       setLoading(false);
     })
@@ -132,11 +137,29 @@ const ViewPat = (props) => {
                         <span className="badge badge-success mr-2 p-2" style={{backgroundColor: "#00cc00"}}>
                           Reports
                         </span>
-                        {/* {patient.profile_data.address} */}
                       </li>
                     </ul>
                   </div>
-                  {patient.patient_history.length === 0 && <h1>No History to show</h1>}
+                  {report.length !==0 &&
+                  <table className="table table-hover table-dark">
+                <thead>
+                  <tr>
+                    <th scope="col">Doctor Name</th>
+                    <th scope="col">Test Date</th>
+                    <th scope="col">Report</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {report.map((rep, index) => (
+                    <tr key={rep.id}>
+                      <th scope="row">{rep.dr}</th>
+                      <th scope="row">{rep.test_date}</th>
+                      <th scope="row"><a href = {`${process.env.REACT_APP_SERVER_URL}${rep.report}`} target="_blank">{rep.test_name}</a></th>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>}
+                  {patient.patient_history.length === 0 && <h1></h1>}
                                 {patient.patient_history.length !== 0 ?
                                     <table className="table table-hover table-dark" style={{overflow: 'auto'}}>
                                         <thead>
@@ -165,7 +188,7 @@ const ViewPat = (props) => {
                 </div>
                 <div className="col-3 col-md-3 p-4 ">
                   <img
-                    src={patient.patient_profile.pic}
+                    src={patient.patient_profile.pic ? url : 'https://static.vecteezy.com/system/resources/previews/002/406/611/original/business-man-cartoon-character-vector.jpg'}
                     // className="rounded-circle"
 
                     style={{ width: "100%" }}
